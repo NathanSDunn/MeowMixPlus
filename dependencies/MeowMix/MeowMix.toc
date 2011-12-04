@@ -1,0 +1,10 @@
+## Interface: 11100
+## Title: Meow Mix
+## Author: kneeki
+## Email: geekbocks@yahoo.com
+## Notes: A mixture of nifty things I thought would be nice in all one mod
+## SavedVariables: MeowMix_VAR
+## OptionalDeps: Decursive
+localization.lua
+MeowMix.xml
+CheckAndCast.lua

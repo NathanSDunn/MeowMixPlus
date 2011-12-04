@@ -1,0 +1,20 @@
+Adapted from Ulti's InnervateFTW 1.5 (http://www.curse-gaming.com/mod.php?addid=2634)
+Coded by Nathan Dunn (nathan.dunn@UNSWalumni.com)
+--------------------------------------------------------------------
+Prevents innervation of:
+*  Invalid Targets
+*  NPC's
+*  Non Casters
+*  Players that are already Innervated
+*  Players with a higher than specified % of mana
+Has the option to announce Innervation to a channel and/or send a tell to the player
+
+-Usage
+Use "/script MeowMixPlus_Innervate(percentage without %, channelName, booleanSendTell)" in for
+example a macro. 
+
+The MeowMixPlus_Innervate() function will return a value depending on what action it took:
+0 = No innvervate was cast
+1 = Innervate was cast on target
+This allows you to make more advanced and correct macros using the MeowMixPlus_Innervate() function.
+

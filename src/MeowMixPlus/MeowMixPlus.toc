@@ -1,0 +1,12 @@
+## Interface: 11100
+## Title: Meowmix |cFF006699Plus|r 
+## Author: MeowMixPlus_
+## Version: 0.5
+## Notes: Updates for Kneeki's MeowMix!
+## Dependencies: MeowMix, UseByName
+## SavedVariables: MeowMixPlus_Var
+localization.lua
+MeowMixPlus_Functions.lua
+MeowMixPlus_DruidMacros.lua
+MeowMix_Overrides.lua
+MeowMixPlus.xml

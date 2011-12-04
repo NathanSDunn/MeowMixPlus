@@ -1,0 +1,37 @@
+<Bindings>
+	<Binding name="MEOWMIX_BUFF" Description="MoTW/NS Heal/OOC Casting Key" header="MEOWMIX" runOnUp="true">
+		if (keystate == "down") then
+			MeowMix_Check()
+		end
+	</Binding>
+	<Binding name="MEOWMIX_BEAR" Description="Bear Form" header="MEOWMIX" runOnUp="true">
+		if (keystate == "down") then
+			MeowMix_CastForm("bear")
+		end
+	</Binding>
+	<Binding name="MEOWMIX_AQUA" Description="Aquatic Form" header="MEOWMIX" runOnUp="true">
+		if (keystate == "down") then
+			MeowMix_CastForm("aqua")
+		end
+	</Binding>
+	<Binding name="MEOWMIX_CAT" Description="Cat Form" header="MEOWMIX" runOnUp="true">
+		if (keystate == "down") then
+			MeowMix_CastForm("cat")
+		end
+	</Binding>
+	<Binding name="MEOWMIX_TRAVEL" Description="Travel Form" header="MEOWMIX" runOnUp="true">
+		if (keystate == "down") then
+			MeowMix_CastForm("travel")
+		end
+	</Binding>
+	<Binding name="MEOWMIX_MOONKIN" Description="Moonkin Form" header="MEOWMIX" runOnUp="true">
+		if (keystate == "down") then
+			MeowMix_CastForm("moonkin")
+		end
+	</Binding>
+	<Binding name="MEOWMIX_CANCEL" Description="Cancel current form" header="MEOWMIX" runOnUp="true">
+		if (keystate == "down") then
+			MeowMix_CancelForm()
+		end
+	</Binding>
+</Bindings>

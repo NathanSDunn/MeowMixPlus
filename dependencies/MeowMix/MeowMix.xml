@@ -1,0 +1,290 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="MeowMix.lua" />
+    <Script file="MiscFunctions.lua" />
+   <Frame name="MeowMix_Dialog" hidden="false" toplevel="true" movable="true" virtual="true" frameStrata="DIALOG" parent="UIParent">
+        <Size> <AbsDimension x="460" y="300"/> </Size>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<TileSize><AbsValue val="32"/></TileSize>
+			<EdgeSize><AbsValue val="32"/></EdgeSize>
+			<BackgroundInsets><AbsInset left="11" right="12" top="12" bottom="11"/></BackgroundInsets>
+        </Backdrop>
+        <Anchors> <Anchor point="CENTER"/> </Anchors>
+		<Scripts>
+			<OnLoad> MeowMix_OnLoad() </OnLoad>
+			<OnMouseDown> this:StartMoving() </OnMouseDown>
+			<OnMouseUp>  this:StopMovingOrSizing() </OnMouseUp>
+			<OnDragStop> this:StopMovingOrSizing() </OnDragStop>
+            <OnEvent> MeowMix_OnEvent() </OnEvent>
+		</Scripts>
+	</Frame>
+	<Frame name="MeowMix_BG1" inherits="MeowMix_Dialog" hidden="true">
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parent_Text10" inherits="GameFontNormal" text="Meow Mix Options">
+					<Anchors><Anchor point="TOP"><Offset><AbsDimension x="0" y="0"/></Offset></Anchor></Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture name="ARFrameTitle" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size><AbsDimension x="400" y="60"/></Size>
+					<Anchors><Anchor point="TOP"><Offset><AbsDimension x="0" y="12"/></Offset></Anchor></Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parent_Text01" inherits="GameFontNormal" text="Welcome to Meow Mix!">
+					<Anchors><Anchor point="CENTER"><Offset><AbsDimension x="0" y="30"/></Offset></Anchor></Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parent_Text02" inherits="GameFontNormal" text="Please remember you must assign a keybinding to trigger casting!">
+					<Anchors><Anchor point="CENTER"><Offset><AbsDimension x="0" y="10"/></Offset></Anchor></Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parent_Text10" inherits="GameFontNormal" text="_____________">
+					<Anchors><Anchor point="TOP" relativePoint="CENTER"><Offset><AbsDimension x="0" y="-65"/></Offset></Anchor></Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parent_Text11" inherits="GameFontNormal" text="">
+					<Anchors><Anchor point="TOP" relativePoint="CENTER"><Offset><AbsDimension x="0" y="-85"/></Offset></Anchor></Anchors>
+                    <Color r="0" g="1.0" b="0"/>
+				</FontString>
+			</Layer>
+            
+            
+            
+			<Layer level="ARTWORK">
+				<FontString name="$parent_Text1" inherits="GameFontNormal" text="General Options:">
+					<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="20" y="-30"/></Offset></Anchor></Anchors>
+				</FontString>
+			</Layer>
+            
+            
+			<Layer level="ARTWORK">
+				<FontString name="$parent_Text20" inherits="GameFontNormal" text="Alert Options:">
+					<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="20" y="-30"/></Offset></Anchor></Anchors>
+				</FontString>
+			</Layer>
+
+            <Layer level="Artwork">
+                <Texture name="$parent_ColorArea">
+                    <Size><AbsDimension x="18" y="18"/></Size>
+                    <Anchors><Anchor point="TOPLEFT" ><Offset><AbsDimension x="16" y="-155"/></Offset></Anchor></Anchors>
+                </Texture>
+            </Layer>
+                        
+		</Layers>
+		<Frames>
+
+			<!-- ############################################################################# -->
+			<!-- ####################################################### SLIDER -->
+			<!-- ############################################################################# -->
+            <Slider name="$parent_Slider1" inherits="OptionsSliderTemplate"  minValue="1" maxValue="100" valueStep="1">
+                <Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="310" y="-110" /></Offset></Anchor></Anchors>
+                <Scripts>
+                    <OnLoad> MeowMix_InitSlider(this:GetName()) </OnLoad>
+                    <OnShow>
+                        this:SetValue("".. MeowMix_VAR["NSHealValue"])
+                        getglobal(this:GetName().."Text"):SetText("Player Health - ".. getglobal(this:GetName()):GetValue() .."%")
+                    </OnShow>
+                    <OnValueChanged>
+                        getglobal(this:GetName().."Text"):SetText("Player Health - ".. getglobal(this:GetName()):GetValue() .."%")
+                        MeowMix_SliderValue(getglobal(this:GetName()):GetValue())
+                    </OnValueChanged>
+                </Scripts>
+            </Slider>
+
+			<!-- ############################################################################# -->
+			<!-- ####################################################### CHECK BUTTONS -->
+			<!-- ############################################################################# -->
+			<CheckButton name="$parent_CheckButton1" inherits="UICheckButtonTemplate" text="">
+				<Size><AbsDimension x="20" y="20"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-55"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" Buff Mark of the Wild") </OnLoad>
+					<OnShow> if MeowMix_VAR["MoTWToggle"]==1 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> MeowMix_CheckBoxCheck1() </OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_CheckButton2" inherits="UICheckButtonTemplate" text="">
+				<Size><AbsDimension x="20" y="20"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-80"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" Buff Thorns"); </OnLoad>
+					<OnShow> if MeowMix_VAR["ThornsToggle"]==1 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> MeowMix_CheckBoxCheck2() </OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_CheckButton3" inherits="UICheckButtonTemplate" text="">
+				<Size><AbsDimension x="20" y="20"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-105"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" Buff Omen of Clarity"); </OnLoad>
+					<OnShow> if MeowMix_VAR["OmenToggle"]==1 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> MeowMix_CheckBoxCheck3() </OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_CheckButton4" inherits="UICheckButtonTemplate" text="">
+				<Size><AbsDimension x="20" y="20"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-130"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" Check for Faerie Fire at 35 energy when using '/meowmix claw'"); </OnLoad>
+					<OnShow> if MeowMix_VAR["ClawFF"]==1 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> MeowMix_CheckBoxCheck4() </OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_CheckButton5" inherits="UICheckButtonTemplate" text="">
+				<Size><AbsDimension x="20" y="20"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-155"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" When using '/meowmix claw' at 5 combo pts, use finisher:"); </OnLoad>
+					<OnShow> if MeowMix_VAR["FBToggle"]==1 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> MeowMix_CheckBoxCheck5() </OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_RadioButton1" inherits="SendMailRadioButtonTemplate">
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="40" y="-180"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnShow> if MeowMix_VAR["Finisher"]==1 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> this:SetChecked(1); MeowMix_BG1_RadioButton2:SetChecked(0); MeowMix_RadioCheck2() </OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_RadioButton2" inherits="SendMailRadioButtonTemplate">
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="60" y="-180"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" Ferocious Bite, Rip"); </OnLoad>
+					<OnShow> if MeowMix_VAR["Finisher"]==2 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> this:SetChecked(1); MeowMix_BG1_RadioButton1:SetChecked(0); MeowMix_RadioCheck2() </OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_CheckButton6" inherits="UICheckButtonTemplate" text="">
+				<Size><AbsDimension x="20" y="20"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-205"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" Prevent shapeshift spamming. (Advanced users)"); </OnLoad>
+					<OnShow> if MeowMix_VAR["PreserveForms"]==1 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> MeowMix_CheckBoxCheck6() </OnClick>
+				</Scripts>
+			</CheckButton>
+
+
+			<CheckButton name="$parent_RadioButton20" inherits="SendMailRadioButtonTemplate">
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="40" y="-75"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" ,"); </OnLoad>
+					<OnShow> if MeowMix_VAR["PlaySound"]==1 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> this:SetChecked(1); MeowMix_BG1_RadioButton21:SetChecked(0); MeowMix_RadioCheck() </OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_RadioButton21" inherits="SendMailRadioButtonTemplate">
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="60" y="-75"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" Quest Fail sound, Silly sounds"); </OnLoad>
+					<OnShow> if MeowMix_VAR["SillySounds"]==1 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> this:SetChecked(1); MeowMix_BG1_RadioButton20:SetChecked(0); MeowMix_RadioCheck() </OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_CheckButton21" inherits="UICheckButtonTemplate">
+				<Size><AbsDimension x="20" y="20"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-100"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" Nature's Swiftness msg when health is below:"); </OnLoad>
+					<OnShow> if MeowMix_VAR["NSHeal"]==1 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> MeowMix_CheckBoxCheck21() </OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_CheckButton22" inherits="UICheckButtonTemplate">
+				<Size><AbsDimension x="20" y="20"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-125"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" Display warnings for curable debuffs"); </OnLoad>
+					<OnShow> if MeowMix_VAR["DebuffToggle"]==1 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> MeowMix_CheckBoxCheck22() </OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_CheckButton23" inherits="UICheckButtonTemplate" text="">
+				<Size><AbsDimension x="20" y="20"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-55"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" Play Sounds"); </OnLoad>
+					<OnShow> if MeowMix_VAR["SoundToggle"]==1 then this:SetChecked(1) else this:SetChecked(0) end </OnShow>
+					<OnClick> MeowMix_CheckBoxCheck23() </OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="$parent_CheckButton24" inherits="UICheckButtonTemplate" text="">
+				<Size><AbsDimension x="30" y="30"/></Size>
+				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-150"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnLoad> getglobal(this:GetName().."Text"):SetText(" Click to change Alert message color") </OnLoad>
+					<OnClick>
+                        this:SetChecked(0)
+                        PlaySound("igMainMenuOptionCheckBoxOn")
+                        ColorPickerFrame:SetColorRGB(0.5,0.5,0.5)
+                        ColorPickerFrame.previousValues = {r = 0.5, g = 0.5, b = 0.5}
+                        ColorPickerFrame.func = MeowMix_ChangeColor
+                        ShowUIPanel(ColorPickerFrame)
+                    </OnClick>
+				</Scripts>
+			</CheckButton>
+
+			<!-- ############################################################################# -->
+			<!-- ####################################################### BUTTONS -->
+			<!-- ############################################################################# -->
+			<Button name="$parent_Button1" inherits="UIPanelButtonTemplate" text="Save and Close">
+				<Size><AbsDimension x="130" y="30"/></Size>
+				<Anchors><Anchor point="CENTER" relativePoint="BOTTOM"><Offset><AbsDimension x="-140" y="30"/></Offset></Anchor></Anchors>
+				<Scripts>
+						<OnClick>MeowMix_FrameToggle()</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Button2" inherits="UIPanelButtonTemplate" text="Alert Options">
+				<Size><AbsDimension x="120" y="30"/></Size>
+				<Anchors><Anchor point="CENTER" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="30"/></Offset></Anchor></Anchors>
+				<Scripts>
+						<OnClick>
+							 MeowMix_HideAll(); MeowMix_BG1_Text20:Show(); MeowMix_BG1_Slider1:Show(); MeowMix_BG1_RadioButton20:Show(); MeowMix_BG1_CheckButton21:Show()
+                             MeowMix_BG1_CheckButton22:Show(); MeowMix_BG1_RadioButton21:Show(); MeowMix_BG1_CheckButton23:Show(); MeowMix_BG1_ColorArea:Show(); MeowMix_BG1_CheckButton24:Show();
+                             MeowMix_ColorSet()
+						</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Button3" inherits="UIPanelButtonTemplate" text="General Options">
+				<Size><AbsDimension x="120" y="30"/></Size>
+				<Anchors><Anchor point="CENTER" relativePoint="BOTTOM"><Offset><AbsDimension x="140" y="30"/></Offset></Anchor></Anchors>
+				<Scripts>
+						<OnClick>
+							MeowMix_HideAll(); MeowMix_BG1_Text1:Show(); MeowMix_BG1_CheckButton1:Show(); MeowMix_BG1_CheckButton2:Show(); MeowMix_BG1_CheckButton3:Show(); MeowMix_BG1_CheckButton4:Show();
+                            MeowMix_BG1_CheckButton5:Show(); MeowMix_BG1_RadioButton1:Show(); MeowMix_BG1_RadioButton2:Show(); MeowMix_BG1_CheckButton6:Show();
+						</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnShow> MeowMix_HideAll(); MeowMix_BG1_Text01:Show(); MeowMix_BG1_Text02:Show(); MeowMix_BG1_Text11:SetText("".. MeowMix_FunnyText()) </OnShow>
+		</Scripts>
+	</Frame>
+
+			<!-- ############################################################################# -->
+			<!-- ####################################################### MESSAGE BOX -->
+			<!-- ############################################################################# -->
+
+	<MessageFrame name="MeowMix_MessageFrame" insertMode="TOP" hidden="false" frameStrata="LOW" toplevel="true" movable="true">
+		<Size><AbsDimension x="1024" y="20"/></Size>
+		<Anchors><Anchor point="CENTER"/></Anchors>
+		<FontString inherits="NumberFontNormalLarge" justifyH="CENTER"/>
+		<Scripts>
+		<OnLoad> this:ClearAllPoints(); this:SetPoint("CENTER", "UIParent", "CENTER", 0, 120) </OnLoad>
+        <OnUpdate> MeowMix_OnUpdate(arg1) </OnUpdate>
+        </Scripts>
+	</MessageFrame>
+
+	<!-- ############ The below code is credit to Tyndral [root@brokengod.net] for the mod IsBuffActive -->
+	<GameTooltip name="MeowMix_IsBuffActiveTooltip" frameStrata="TOOLTIP" hidden="true" inherits="GameTooltipTemplate">
+		<Scripts>
+			<OnLoad>
+				this:SetOwner(UIParent, "ANCHOR_NONE")
+			</OnLoad>
+		</Scripts>
+	</GameTooltip>
+</Ui>
